@@ -1,0 +1,15 @@
+# Desativa o cache de página do LiteSpeed para este site (site institucional
+# pequeno, atualizado com frequência via deploy.py — evita ter que purgar
+# cache manualmente pelo hPanel a cada atualização).
+<IfModule LiteSpeed>
+  CacheDisable public /
+</IfModule>
+
+# Garante que navegadores sempre busquem a versão mais recente do HTML.
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+</IfModule>

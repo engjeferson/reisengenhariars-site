@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=20260715f">
+<link rel="stylesheet" href="css/style.css?v=0539c682eb">
 </head>
 <body>
 
@@ -27,6 +27,7 @@
       <a href="#steelframe">Steel Frame</a>
       <a href="#processo">Nosso Processo</a>
       <a href="#galeria">Obras</a>
+      <a href="#depoimentos">Depoimentos</a>
       <a href="#contato">Contato</a>
     </nav>
     <a href="https://wa.me/5551981519380?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20falar%20sobre%20um%20projeto." target="_blank" rel="noopener" class="btn btn--whatsapp header__cta">
@@ -38,6 +39,7 @@
     </button>
   </div>
 </header>
+<div class="nav-backdrop" id="navBackdrop"></div>
 
 <!-- HERO -->
 <section class="hero" id="top">
@@ -73,7 +75,7 @@
 <section class="section" id="sobre">
   <div class="container about">
     <div class="about__img">
-      <img src="assets/img/processo/09-pintura-entrega.png" alt="Obra finalizada pela Reis Engenharia">
+      <img src="assets/img/equipe/eng-jeferson-reis-obra.jpg" alt="Eng. Jeferson Reis na entrega de uma obra da Reis Engenharia">
       <div class="about__badge">
         <strong>Eng. Jeferson Reis da Silva</strong>
         <span>CREA-RS 236502</span>
@@ -108,7 +110,8 @@
         <h3>Construção Residencial</h3>
         <p>Construção completa de casas em alvenaria estrutural, com projeto, execução e acompanhamento técnico do início ao fim.</p>
       </div>
-      <a href="#steelframe" class="card">
+      <a href="#steelframe" class="card card--featured">
+        <span class="card__badge">Método exclusivo</span>
         <div class="card__icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21V8l8-5 8 5v13M4 21h16M9 21v-6h6v6M9 12h.01M15 12h.01"/></svg>
         </div>
@@ -157,11 +160,59 @@
         <p class="eyebrow steelframe__eyebrow">MÉTODO REIS FRAME™</p>
         <h2>A revolução da construção civil chegou</h2>
         <p class="steelframe__lead">Engenharia industrializada com projeto em BIM: cada peça da estrutura é calculada e cortada com precisão milimétrica antes de chegar à obra. O resultado é uma construção mais rápida, mais limpa e com controle de qualidade em cada etapa — da fundação ao acabamento.</p>
+        <div class="steelframe__norms">
+          <span class="steelframe__norms-label">Sistema regulamentado no Brasil</span>
+          <div class="steelframe__norms-tags">
+            <span>NBR 16970</span>
+            <span>NBR 14762</span>
+            <span>NBR 15253</span>
+            <span>NBR 15575</span>
+          </div>
+        </div>
       </div>
       <figure class="steelframe__photo">
-        <img src="assets/img/steelframe/perfis-galvanizados.jpg" alt="Perfis de aço galvanizado usados na estrutura Light Steel Frame">
-        <figcaption>Perfis de aço galvanizado — a base do sistema Light Steel Frame</figcaption>
+        <img src="assets/img/steelframe/obra-steel-estrutura-2pav.jpg" alt="Estrutura em Steel Frame de dois pavimentos - obra Reis Engenharia">
+        <figcaption>Obras reais em Steel Frame executadas pela Reis Engenharia</figcaption>
       </figure>
+    </div>
+
+    <figure class="steelframe__featured">
+      <img src="assets/img/steelframe/destaque-estrutura-03.png" alt="Casa em Steel Frame: metade estrutura de aço, metade acabamento finalizado">
+      <figcaption>Do esqueleto de aço ao acabamento finalizado — a mesma casa, dois momentos da obra.</figcaption>
+    </figure>
+
+    <div class="steelframe__anatomy">
+      <h3 class="steelframe__anatomy-title">Como funciona por dentro</h3>
+      <div class="steelframe__anatomy-grid">
+        <figure class="steelframe__anatomy-card">
+          <img src="assets/img/steelframe/ilustracao-fundacao.png" alt="Ilustração da ancoragem entre fundação e estrutura em Steel Frame">
+          <figcaption>
+            <strong>Fundação sob medida</strong>
+            <p>Cada fundação é projetada individualmente — sondagem, topografia e cargas do terreno definem a solução, sem soluções genéricas.</p>
+          </figcaption>
+        </figure>
+        <figure class="steelframe__anatomy-card">
+          <img src="assets/img/steelframe/ilustracao-camadas-parede.png" alt="Ilustração das camadas do sistema de fechamento em Steel Frame">
+          <figcaption>
+            <strong>Parede em camadas</strong>
+            <p>Da placa de gesso ao revestimento externo, cada camada cumpre uma função: estrutura, isolamento, vedação e acabamento.</p>
+          </figcaption>
+        </figure>
+        <figure class="steelframe__anatomy-card">
+          <img src="assets/img/steelframe/ilustracao-instalacoes.png" alt="Ilustração das instalações elétricas e hidráulicas passando pelos perfis de Steel Frame">
+          <figcaption>
+            <strong>Instalações embutidas</strong>
+            <p>Elétrica e hidráulica passam por furos técnicos pré-definidos nos perfis — planejadas em projeto, sem improviso no canteiro.</p>
+          </figcaption>
+        </figure>
+        <figure class="steelframe__anatomy-card">
+          <img src="assets/img/steelframe/ilustracao-conforto-termico.png" alt="Ilustração do isolamento térmico e acústico em Steel Frame">
+          <figcaption>
+            <strong>Conforto térmico e acústico</strong>
+            <p>Isolamento em lã de vidro ou de rocha em cada camada da parede reduz a transmissão de calor e ruído entre ambientes.</p>
+          </figcaption>
+        </figure>
+      </div>
     </div>
 
     <div class="steelframe__grid">
@@ -223,39 +274,105 @@
     <h2 class="center">Obras Reis Engenharia</h2>
     <p class="section__lead center">Alguns registros reais das nossas obras em andamento e entregues.</p>
     <div class="gallery" id="gallery">
-      <button class="gallery__item" data-full="assets/img/obras/casa-varanda-vidro.jpg">
-        <img src="assets/img/obras/casa-varanda-vidro.jpg" alt="Casa dois pavimentos com varanda e guarda-corpo de vidro" loading="lazy">
+      <button class="gallery__item" data-full="assets/img/galeria/fachada-moderna-por-do-sol.jpg">
+        <img src="assets/img/galeria/fachada-moderna-por-do-sol.jpg" alt="Fachada moderna com pedra e porta de madeira ao entardecer" loading="lazy">
       </button>
-      <button class="gallery__item" data-full="assets/img/obras/fachada-moderna-01.jpg">
-        <img src="assets/img/obras/fachada-moderna-01.jpg" alt="Fachada moderna com porta de madeira ripada" loading="lazy">
+      <button class="gallery__item" data-full="assets/img/galeria/fachada-verde-oliva-entardecer.jpg">
+        <img src="assets/img/galeria/fachada-verde-oliva-entardecer.jpg" alt="Casa moderna verde-oliva com garagem coberta ao entardecer" loading="lazy">
       </button>
-      <button class="gallery__item" data-full="assets/img/obras/sala-lareira-pedra.jpg">
-        <img src="assets/img/obras/sala-lareira-pedra.jpg" alt="Sala com parede de pedra e piso de madeira" loading="lazy">
+      <button class="gallery__item" data-full="assets/img/galeria/entrada-pedra-portao-metalico.jpg">
+        <img src="assets/img/galeria/entrada-pedra-portao-metalico.jpg" alt="Entrada com revestimento de pedra e porta de madeira ao entardecer" loading="lazy">
       </button>
-      <button class="gallery__item" data-full="assets/img/obras/execucao-banner-reis.jpg">
-        <img src="assets/img/obras/execucao-banner-reis.jpg" alt="Obra em execução pela Reis Engenharia" loading="lazy">
+      <button class="gallery__item" data-full="assets/img/galeria/fachada-cinza-entardecer.jpg">
+        <img src="assets/img/galeria/fachada-cinza-entardecer.jpg" alt="Fachada cinza com detalhe em pedra ao entardecer" loading="lazy">
       </button>
-      <button class="gallery__item" data-full="assets/img/obras/fachada-moderna-varanda.jpg">
-        <img src="assets/img/obras/fachada-moderna-varanda.jpg" alt="Eng. Jeferson Reis na entrega de obra" loading="lazy">
+      <button class="gallery__item" data-full="assets/img/galeria/fachada-madeira-ripada-pedra.jpg">
+        <img src="assets/img/galeria/fachada-madeira-ripada-pedra.jpg" alt="Fachada com porta de madeira ripada e revestimento em pedra" loading="lazy">
       </button>
-      <button class="gallery__item" data-full="assets/img/obras/banheiro-detalhe.jpg">
-        <img src="assets/img/obras/banheiro-detalhe.jpg" alt="Banheiro com revestimento verde em execução" loading="lazy">
+      <button class="gallery__item" data-full="assets/img/galeria/area-social-integrada.jpg">
+        <img src="assets/img/galeria/area-social-integrada.jpg" alt="Área social integrada com piscina ao entardecer" loading="lazy">
       </button>
-      <button class="gallery__item" data-full="assets/img/obras/casa-revestimento-pedra.jpg">
-        <img src="assets/img/obras/casa-revestimento-pedra.jpg" alt="Casa com revestimento em pedra canjiquinha" loading="lazy">
+      <button class="gallery__item" data-full="assets/img/galeria/fachada-preta-pedra-mosaico.jpg">
+        <img src="assets/img/galeria/fachada-preta-pedra-mosaico.jpg" alt="Fachada com pilar em mosaico de pedra e porta preta" loading="lazy">
       </button>
-      <button class="gallery__item" data-full="assets/img/obras/estrutura-dois-pavimentos.jpg">
-        <img src="assets/img/obras/estrutura-dois-pavimentos.jpg" alt="Estrutura de dois pavimentos em construção" loading="lazy">
+      <button class="gallery__item" data-full="assets/img/galeria/entrada-pedra-portao-madeira.jpg">
+        <img src="assets/img/galeria/entrada-pedra-portao-madeira.jpg" alt="Entrada com pilar em pedra e garagem coberta" loading="lazy">
       </button>
-      <button class="gallery__item" data-full="assets/img/obras/fachada-moderna-lateral.jpg">
-        <img src="assets/img/obras/fachada-moderna-lateral.jpg" alt="Vista lateral de fachada moderna com garagem" loading="lazy">
+      <button class="gallery__item" data-full="assets/img/galeria/casa-azul-varanda-tijolo.jpg">
+        <img src="assets/img/galeria/casa-azul-varanda-tijolo.jpg" alt="Casa azul com varanda e colunas revestidas" loading="lazy">
       </button>
-      <button class="gallery__item" data-full="assets/img/obras/interior-piso-madeira.jpg">
-        <img src="assets/img/obras/interior-piso-madeira.jpg" alt="Interior com piso laminado em fase de acabamento" loading="lazy">
+      <button class="gallery__item" data-full="assets/img/galeria/fachada-terraco-superior.jpg">
+        <img src="assets/img/galeria/fachada-terraco-superior.jpg" alt="Fachada de dois pavimentos com terraço e piscina" loading="lazy">
       </button>
-      <button class="gallery__item" data-full="assets/img/obras/fachada-moderna-02.jpg">
-        <img src="assets/img/obras/fachada-moderna-02.jpg" alt="Fachada moderna finalizada" loading="lazy">
+      <button class="gallery__item" data-full="assets/img/galeria/fachada-cinza-jardim-lateral.jpg">
+        <img src="assets/img/galeria/fachada-cinza-jardim-lateral.jpg" alt="Fachada moderna cinza com jardim lateral e pilar em pedra" loading="lazy">
       </button>
+      <button class="gallery__item" data-full="assets/img/galeria/fachada-telhado-colonial.jpg">
+        <img src="assets/img/galeria/fachada-telhado-colonial.jpg" alt="Casa com telhado colonial e área de garagem coberta" loading="lazy">
+      </button>
+      <button class="gallery__item" data-full="assets/img/galeria/muro-portao-moderno.jpg">
+        <img src="assets/img/galeria/muro-portao-moderno.jpg" alt="Muro e portão modernos com detalhe em madeira" loading="lazy">
+      </button>
+      <button class="gallery__item" data-full="assets/img/galeria/detalhe-porta-preta-pedra.jpg">
+        <img src="assets/img/galeria/detalhe-porta-preta-pedra.jpg" alt="Detalhe de porta preta e pilar em mosaico de pedra" loading="lazy">
+      </button>
+      <button class="gallery__item" data-full="assets/img/galeria/garagem-coberta-fachada-pedra.jpg">
+        <img src="assets/img/galeria/garagem-coberta-fachada-pedra.jpg" alt="Garagem coberta com fachada em pedra e jardim iluminado" loading="lazy">
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="section section--alt" id="depoimentos">
+  <div class="container">
+    <p class="eyebrow center">O QUE DIZEM NOSSOS CLIENTES</p>
+    <h2 class="center">Feedbacks de quem já construiu com a gente</h2>
+    <p class="section__lead center">A satisfação dos nossos clientes é o maior indicador da qualidade, dedicação e transparência com que conduzimos cada obra.</p>
+
+    <div class="testimonials">
+      <div class="testimonial">
+        <p class="testimonial__quote">"Desde o primeiro contato até a entrega final, tudo foi feito com profissionalismo, agilidade e excelência. Ficamos impressionados com a rapidez na execução, sem abrir mão da qualidade."</p>
+        <div class="testimonial__author">
+          <strong>Anderson e Franciele</strong>
+          <span>Sapucaia do Sul · Casa 110,34m²</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial__quote">"A Reis Engenharia transformou em realidade o grande sonho de construir nosso lar do jeitinho que sempre imaginamos. Parabéns por entregar não apenas uma obra, mas um sonho concretizado com qualidade e carinho."</p>
+        <div class="testimonial__author">
+          <strong>Jenifer e Vinícius</strong>
+          <span>Sapucaia do Sul · Casa 218,10m²</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial__quote">"Contratar a Reis Engenharia foi uma decisão extremamente acertada. A equipe cuidou de tudo com excelência, desde a burocracia com a prefeitura até a execução da obra. Já indiquei para vários amigos e recomendo de olhos fechados."</p>
+        <div class="testimonial__author">
+          <strong>Daniel e Mariana</strong>
+          <span>São Leopoldo · Casa 168,00m²</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial__quote">"O prazo de entrega era de 1 ano, mas nossa casa ficou pronta em apenas 5 meses, sem perder em qualidade ou cuidado. Cada pedido que fizemos foi ouvido e atendido, sempre com boa vontade e dedicação."</p>
+        <div class="testimonial__author">
+          <strong>Vitória e Nicolas</strong>
+          <span>São Leopoldo · Casa 90,00m²</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial__quote">"Nossa experiência com a casa nova está sendo maravilhosa. A casa é muito confortável, tudo do jeito que sempre sonhamos! Estamos muito felizes e realizados, vocês são 10."</p>
+        <div class="testimonial__author">
+          <strong>Adriele e Gabriel</strong>
+          <span>São Leopoldo · Sobrado 90,00m²</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial__quote">"Sem sombra de dúvidas, a melhor escolha que fizemos foi fechar com a Reis Engenharia. Empresa séria, que está sempre pronta para tirar dúvidas e dar suporte diferenciado em tudo que o cliente precisa. Super indicamos."</p>
+        <div class="testimonial__author">
+          <strong>Diego e Jeisse</strong>
+          <span>Lomba Grande - NH · Casa 124,25m²</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -274,11 +391,11 @@
         </span>
         <span>(51) 98151-9380</span>
       </a>
-      <a class="contact__row" href="mailto:eng.jefersonreis@gmail.com">
+      <a class="contact__row" href="mailto:contato@reisengenhariars.com.br">
         <span class="contact__icon">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
         </span>
-        <span>eng.jefersonreis@gmail.com</span>
+        <span>contato@reisengenhariars.com.br</span>
       </a>
       <a class="contact__row" href="https://instagram.com/reisengenharia_rs" target="_blank" rel="noopener">
         <span class="contact__icon">
@@ -295,7 +412,7 @@
     </div>
 
     <form class="contact__form" id="contactForm">
-      <input type="hidden" name="access_key" value="COLE_AQUI_SUA_ACCESS_KEY_WEB3FORMS">
+      <input type="hidden" name="access_key" value="891ede9d-f7c2-4718-93bb-67a10d90af23">
       <input type="hidden" name="subject" value="Novo contato pelo site - Reis Engenharia">
       <input type="hidden" name="from_name" value="Site Reis Engenharia">
       <input type="checkbox" name="botcheck" class="hidden-field" style="display:none">
@@ -329,10 +446,40 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="container footer__inner">
-    <img src="assets/img/logo/logo-branca.png" alt="Reis Engenharia & Construções" class="footer__logo">
-    <p>&copy; <span id="year"></span> Reis Engenharia & Construções. Todos os direitos reservados.</p>
-    <p class="footer__crea">Eng. Jeferson Reis da Silva · CREA-RS 236502</p>
+  <div class="container footer__top">
+    <div class="footer__col footer__brand">
+      <img src="assets/img/logo/logo-branca.png" alt="Reis Engenharia & Construções" class="footer__logo">
+      <p>Construção residencial, reformas e Steel Frame com gestão completa, do projeto à entrega das chaves.</p>
+      <div class="footer__social">
+        <a href="https://instagram.com/reisengenharia_rs" target="_blank" rel="noopener" aria-label="Instagram da Reis Engenharia">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        </a>
+        <a href="https://wa.me/5551981519380?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20falar%20sobre%20um%20projeto." target="_blank" rel="noopener" aria-label="WhatsApp da Reis Engenharia">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer__col">
+      <h4>Navegação</h4>
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#steelframe">Steel Frame</a>
+      <a href="#galeria">Obras</a>
+      <a href="#depoimentos">Depoimentos</a>
+    </div>
+    <div class="footer__col">
+      <h4>Contato</h4>
+      <a href="https://wa.me/5551981519380">(51) 98151-9380</a>
+      <a href="mailto:contato@reisengenhariars.com.br">contato@reisengenhariars.com.br</a>
+      <span>Porto Alegre e Região Metropolitana - RS</span>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <p>&copy; <span id="year"></span> Reis Engenharia & Construções. Todos os direitos reservados.</p>
+      <p class="footer__crea">Eng. Jeferson Reis da Silva · CREA-RS 236502</p>
+      <a href="politica-de-privacidade.html" class="footer__privacy">Política de Privacidade</a>
+    </div>
   </div>
 </footer>
 
@@ -344,9 +491,11 @@
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <button class="lightbox__close" id="lightboxClose" aria-label="Fechar">&times;</button>
+  <button class="lightbox__nav lightbox__prev" id="lightboxPrev" aria-label="Foto anterior">&#10094;</button>
   <img id="lightboxImg" src="" alt="">
+  <button class="lightbox__nav lightbox__next" id="lightboxNext" aria-label="Próxima foto">&#10095;</button>
 </div>
 
-<script src="js/script.js"></script>
+<script src="js/script.js?v=b9f9d2a883"></script>
 </body>
 </html>
