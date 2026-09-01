@@ -1,0 +1,6 @@
+# Segredos/credenciais - nunca devem ser versionados neste repo.
+# As credenciais de deploy (FTP) ficam fora desta pasta (ver deploy.py),
+# esta regra é só uma rede de segurança extra.
+*credentials*.json
+.reis-site-deploy/
+.env
