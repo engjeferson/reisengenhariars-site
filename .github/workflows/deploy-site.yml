@@ -1,0 +1,64 @@
+# Publica o site na Hostinger (FTP) sempre que algo do site entra na main, ou
+# manualmente em Actions > "Publicar site" > Run workflow.
+#
+# Usa o mesmo deploy.py de sempre. As credenciais ficam no secret
+# FTP_CREDENTIALS_JSON (conteúdo do arquivo ~/.reis-site-deploy/ftp_credentials.json).
+name: Publicar site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'politica-de-privacidade.html'
+      - '.htaccess'
+      - 'css/**'
+      - 'js/**'
+      - 'assets/**'
+      - 'orcamento/**'
+      - 'deploy.py'
+      - '.github/workflows/deploy-site.yml'
+  workflow_dispatch:
+
+# Uma publicação por vez, na ordem em que chegam.
+concurrency:
+  group: publicar-site
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Preparar credenciais do FTP
+        env:
+          FTP_CREDENTIALS_JSON: ${{ secrets.FTP_CREDENTIALS_JSON }}
+        run: |
+          if [ -z "$FTP_CREDENTIALS_JSON" ]; then
+            echo "::error::Falta o secret FTP_CREDENTIALS_JSON (Settings > Secrets and variables > Actions)."
+            exit 1
+          fi
+          umask 077
+          mkdir -p "$HOME/.reis-site-deploy"
+          printf '%s' "$FTP_CREDENTIALS_JSON" > "$HOME/.reis-site-deploy/ftp_credentials.json"
+          # O repositório é público: esconde servidor, usuário e senha dos logs.
+          python3 - <<'PY'
+          import json, os
+          dados = json.load(open(os.path.expanduser("~/.reis-site-deploy/ftp_credentials.json")))
+          for chave in ("host", "user", "password", "remote_root"):
+              valor = str(dados.get(chave, "")).strip()
+              if valor:
+                  print(f"::add-mask::{valor}")
+          PY
+
+      - name: Publicar
+        run: python deploy.py
