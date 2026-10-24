@@ -32,6 +32,10 @@ Fotos e depoimentos reais vêm de pastas do Google Drive da empresa (`02. MARKET
 
 Nome: Reis Engenharia & Construções. Responsável técnico: Eng. Jeferson Reis da Silva, CREA-RS 236502. Instagram: @reisengenharia_rs. Fonte: Montserrat. Paleta: navy escuro (#0e1a2b), teal (#4ecdc4), dourado de apoio (#f2c230). Logos em `assets/img/logo/`.
 
+## Funil de anúncios (/orcamento/)
+
+Página separada da institucional, usada como destino dos anúncios do Instagram: simulação em 6 etapas (sistema construtivo, terreno e condomínio fechado, tamanho, investimento, prazo e prioridades, contato). Envia o lead ao CRM (`POST https://crm.reisengenhariars.com.br/api/funil/lead`, código no repositório `crm-reis-engenharia`) e dispara o Pixel do Meta (dataset "CRM Reis Engenharia", ID 1394932546062127: PageView, ViewContent, QuizStart, QuizStep, Lead). UTMs da URL seguem para o CRM. No fim, o cliente pode continuar no WhatsApp com as respostas na mensagem. Para testar sem enviar nada ao CRM, abra a página com `?preview=1`. Arquivos em `orcamento/` (publicados pelo `deploy.py`); artes dos anúncios em `assets/img/anuncios/`. Metragem é só pergunta de qualificação: os títulos e anúncios não limitam o tamanho da casa.
+
 ## Evidence on Hand
 
 - 6 depoimentos reais de clientes (extraídos de PDF da empresa): Anderson e Franciele, Jenifer e Vinícius, Daniel e Mariana, Vitória e Nicolas, Adriele e Gabriel, Diego e Jeisse — cada um com cidade e metragem da casa.
