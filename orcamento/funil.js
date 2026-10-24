@@ -25,11 +25,11 @@
     { name: 'Área construída', title: 'Qual o tamanho da casa que você quer construir?',
       lead: 'Somos especialistas em casas de 80 m² ou mais. Uma estimativa já ajuda, ajustamos juntos depois.',
       questions: [{ key: 'metragem', label: 'Tamanho', type: 'size', options: [
-        { v: 'menos_80', t: 'Menos de 80 m²', big: '< 80', f: 0.26 },
-        { v: '80_120', t: '80 a 120 m²', big: '80–120', f: 0.44 },
-        { v: '120_180', t: '120 a 180 m²', big: '120–180', f: 0.62 },
-        { v: '180_250', t: '180 a 250 m²', big: '180–250', f: 0.8 },
-        { v: 'acima_250', t: 'Acima de 250 m²', big: '250+', f: 1 },
+        { v: 'menos_80', t: 'Menos de 80 m²', pre: 'Menos de', big: '80 m²', f: 0.26 },
+        { v: '80_120', t: 'Entre 80 e 120 m²', pre: 'Entre', big: '80 e 120 m²', f: 0.44 },
+        { v: '120_180', t: 'Entre 120 e 180 m²', pre: 'Entre', big: '120 e 180 m²', f: 0.62 },
+        { v: '180_250', t: 'Entre 180 e 250 m²', pre: 'Entre', big: '180 e 250 m²', f: 0.8 },
+        { v: 'acima_250', t: 'Mais de 250 m²', pre: 'Mais de', big: '250 m²', f: 1 },
         { v: 'nao_sei', t: 'Ainda não sei', unknown: true }
       ] }] },
     { name: 'Investimento', title: 'Quanto pretende investir na obra?',
@@ -112,8 +112,8 @@
       } else if (q.type === 'size' && o.unknown) {
         inner = key + '<span class="plan plan--unknown" aria-hidden="true"><i style="height:44px"></i></span><span class="size size--text"><b>' + esc(o.t) + '</b></span>';
       } else if (q.type === 'size') {
-        inner = key + '<span class="plan" aria-hidden="true"><i style="width:' + Math.round(o.f * 100) + '%;height:' + Math.round(20 + o.f * 32) + 'px"></i></span>' +
-          '<span class="size"><b>' + esc(o.big) + '</b><span>m²</span></span>';
+        inner = key + '<span class="plan" aria-hidden="true"><i style="width:' + Math.round(o.f * 70) + '%;height:' + Math.round(20 + o.f * 32) + 'px"></i></span>' +
+          '<span class="size"><span class="size__pre">' + esc(o.pre) + '</span><b>' + esc(o.big) + '</b></span>';
       } else {
         inner = key + '<span>' + esc(o.t) + '</span>';
       }
@@ -279,7 +279,7 @@
   var LABEL = {
     sistema: { steel_frame: 'Steel Frame', alvenaria: 'Alvenaria', indeciso: 'ainda não sei qual sistema' },
     terreno: { tenho: 'já tenho terreno', adquirindo: 'estou adquirindo o terreno', procurando: 'estou procurando terreno' },
-    metragem: { nao_sei: 'tamanho a definir', menos_80: 'menos de 80 m²', '80_120': '80 a 120 m²', '120_180': '120 a 180 m²', '180_250': '180 a 250 m²', acima_250: 'acima de 250 m²' }
+    metragem: { nao_sei: 'tamanho a definir', menos_80: 'menos de 80 m²', '80_120': 'entre 80 e 120 m²', '120_180': 'entre 120 e 180 m²', '180_250': 'entre 180 e 250 m²', acima_250: 'mais de 250 m²' }
   };
 
   function finish() {

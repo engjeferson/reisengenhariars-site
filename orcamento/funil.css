@@ -100,9 +100,9 @@ button,input{font:inherit;color:inherit;}
 .plan{position:relative;width:100%;height:52px;display:flex;align-items:flex-end;}
 .plan i{display:block;border:1.5px solid currentColor;background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(78,205,196,.35) 5px 6px);}
 .opt--size input:checked+label .plan i{background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(78,205,196,.7) 5px 6px);}
-.size{display:flex;align-items:baseline;gap:5px;font-family:var(--mono);}
-.size b{font-size:1.3rem;font-weight:500;letter-spacing:-.02em;}
-.size span{font-size:.78rem;opacity:.75;}
+.size{display:flex;flex-direction:column;gap:1px;line-height:1.15;}
+.size__pre{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;opacity:.7;}
+.size b{font-size:1.12rem;font-weight:800;letter-spacing:-.01em;}
 .opt--size .key{position:absolute;top:10px;right:10px;width:24px;height:24px;font-size:.7rem;}
 .opts--2 .opt--size:last-child:nth-child(odd){grid-column:1/-1;}
 
@@ -136,6 +136,6 @@ button,input{font:inherit;color:inherit;}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;}}
 
 .plan--unknown i{width:78%;border-style:dashed;background:none;opacity:.7;}
-.size--text b{font-family:var(--ff);font-size:1rem;font-weight:700;letter-spacing:0;}
+.size--text b{font-size:1rem;font-weight:700;}
 .hint{display:block;font-weight:500;font-size:.78rem;color:var(--ink-2);margin-top:2px;}
 .opt--multi .key{border-radius:4px;}
