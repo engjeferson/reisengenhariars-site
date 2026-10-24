@@ -18,9 +18,11 @@
     { name: 'Terreno', title: 'Como está o terreno?',
       lead: 'A situação do terreno define por onde o projeto começa.',
       questions: [{ key: 'terreno', label: 'Terreno', options: [
-        { v: 'tenho', t: 'Já tenho o terreno' },
-        { v: 'adquirindo', t: 'Estou adquirindo' },
-        { v: 'procurando', t: 'Ainda estou procurando' }
+        { v: 'tenho_condominio', t: 'Tenho terreno em condomínio fechado' },
+        { v: 'tenho', t: 'Tenho terreno fora de condomínio' },
+        { v: 'adquirindo', t: 'Estou adquirindo o terreno' },
+        { v: 'procurando_condominio', t: 'Procuro terreno em condomínio fechado' },
+        { v: 'procurando', t: 'Ainda estou procurando terreno' }
       ] }] },
     { name: 'Área construída', title: 'Qual o tamanho da casa que você quer construir?',
       lead: 'Uma estimativa já ajuda, ajustamos juntos depois.',
@@ -278,7 +280,7 @@
 
   var LABEL = {
     sistema: { steel_frame: 'Steel Frame', alvenaria: 'Alvenaria', indeciso: 'ainda não sei qual sistema' },
-    terreno: { tenho: 'já tenho terreno', adquirindo: 'estou adquirindo o terreno', procurando: 'estou procurando terreno' },
+    terreno: { tenho_condominio: 'já tenho terreno em condomínio fechado', tenho: 'já tenho terreno', adquirindo: 'estou adquirindo o terreno', procurando_condominio: 'estou procurando terreno em condomínio fechado', procurando: 'estou procurando terreno' },
     metragem: { nao_sei: 'tamanho a definir', menos_80: 'menos de 80 m²', '80_120': 'entre 80 e 120 m²', '120_180': 'entre 120 e 180 m²', '180_250': 'entre 180 e 250 m²', acima_250: 'mais de 250 m²' }
   };
 
