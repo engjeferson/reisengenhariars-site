@@ -38,6 +38,7 @@ ALLOWED_TOP_LEVEL = {
     "css",
     "js",
     "assets",
+    "orcamento",
 }
 
 # Safety net: never upload these regardless of where they appear
@@ -70,6 +71,21 @@ def bump_cache_busters():
         with open(index_path, "w", encoding="utf-8") as f:
             f.write(new_html)
         print(f"Cache-busters atualizados: style.css?v={css_hash} | script.js?v={js_hash}")
+
+    # Funil de anúncios (orcamento/): mesmo esquema para funil.css e funil.js.
+    funil_dir = os.path.join(SITE_DIR, "orcamento")
+    funil_index = os.path.join(funil_dir, "index.html")
+    if os.path.exists(funil_index):
+        with open(funil_index, "r", encoding="utf-8") as f:
+            funil_html = f.read()
+        new_funil = funil_html
+        for name in ("funil.css", "funil.js"):
+            h = file_hash(os.path.join(funil_dir, name))
+            new_funil = re.sub(rf'({re.escape(name)})(\?v=[^"]*)?', rf'\1?v={h}', new_funil)
+        if new_funil != funil_html:
+            with open(funil_index, "w", encoding="utf-8") as f:
+                f.write(new_funil)
+            print("Cache-busters do funil atualizados (orcamento/)")
 
 
 def load_credentials():

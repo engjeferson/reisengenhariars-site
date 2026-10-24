@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simule sua obra | Reis Engenharia & Construções</title>
+<meta name="description" content="Responda 6 perguntas rápidas e receba um diagnóstico da sua obra com engenheiro responsável, em Steel Frame ou Alvenaria.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="../assets/img/logo/logo-teal.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="funil.css?v=dev">
+<!-- Meta Pixel (dataset "CRM Reis Engenharia") -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1394932546062127');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1394932546062127&ev=PageView&noscript=1" alt=""></noscript>
+</head>
+<body>
+
+<!-- ENTRADA -->
+<main class="screen screen--intro" id="intro">
+  <div class="intro">
+    <img class="intro__logo" src="../assets/img/logo/logo-branca.png" alt="Reis Engenharia & Construções">
+    <p class="intro__kicker">Obras de médio e alto padrão</p>
+    <h1>Sua obra com engenheiro responsável do primeiro ao último dia.</h1>
+    <p class="intro__lead">Em 2 minutos, entenda qual sistema construtivo, tamanho e prazo combinam com o seu projeto.</p>
+    <ul class="intro__badges">
+      <li><strong>+100</strong> obras entregues</li>
+      <li><strong>CREA-RS</strong> responsável técnico</li>
+      <li><strong>2 min</strong> para responder</li>
+      <li><strong>Sem</strong> compromisso</li>
+    </ul>
+    <button class="btn-main" id="start" type="button">Começar minha simulação</button>
+    <p class="intro__note">Orientação inicial, sem proposta fechada. Vamos entender o seu projeto.</p>
+  </div>
+</main>
+
+<!-- FUNIL -->
+<div class="screen screen--quiz" id="quiz" hidden>
+  <div class="quiz">
+    <img class="quiz__logo" src="../assets/img/logo/logo-teal.png" alt="Reis Engenharia">
+    <div class="progress" aria-hidden="true">
+      <div class="progress__meta"><span id="stepName"></span><span id="stepCount"></span></div>
+      <div class="progress__bar"><span id="progressFill"></span></div>
+    </div>
+    <form id="stepForm" novalidate>
+      <div id="stepBody"></div>
+      <p class="error" id="stepError" role="alert" hidden></p>
+    </form>
+  </div>
+  <footer class="quiz__nav">
+    <button type="button" class="nav-back" id="back">← Voltar</button>
+    <button type="submit" form="stepForm" class="nav-next" id="next" disabled>Próximo →</button>
+  </footer>
+</div>
+
+<!-- OBRIGADO -->
+<main class="screen screen--done" id="done" hidden>
+  <div class="intro">
+    <img class="intro__logo" src="../assets/img/logo/logo-branca.png" alt="Reis Engenharia & Construções">
+    <h1 id="doneTitle">Recebemos suas respostas!</h1>
+    <p class="intro__lead">Um engenheiro da nossa equipe vai analisar o seu projeto e chamar você no WhatsApp. Se preferir, adiante a conversa agora.</p>
+    <a class="btn-main btn-main--wa" id="waLink" href="#" target="_blank" rel="noopener">Continuar no WhatsApp</a>
+    <p class="intro__note">Atendemos Grande Porto Alegre/RS.</p>
+  </div>
+</main>
+
+<script src="funil.js?v=dev"></script>
+</body>
+</html>
