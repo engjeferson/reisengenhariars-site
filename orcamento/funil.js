@@ -23,7 +23,7 @@
         { v: 'procurando', t: 'Ainda estou procurando' }
       ] }] },
     { name: 'Área construída', title: 'Qual o tamanho da casa que você quer construir?',
-      lead: 'Somos especialistas em casas de 80 m² ou mais. Uma estimativa já ajuda, ajustamos juntos depois.',
+      lead: 'Uma estimativa já ajuda, ajustamos juntos depois.',
       questions: [{ key: 'metragem', label: 'Tamanho', type: 'size', options: [
         { v: 'menos_80', t: 'Menos de 80 m²', pre: 'Menos de', big: '80 m²', f: 0.26 },
         { v: '80_120', t: 'Entre 80 e 120 m²', pre: 'Entre', big: '80 e 120 m²', f: 0.44 },
