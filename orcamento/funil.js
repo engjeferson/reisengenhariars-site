@@ -29,7 +29,8 @@
         { v: '80_120', t: '80 a 120 m²', big: '80–120', f: 0.44 },
         { v: '120_180', t: '120 a 180 m²', big: '120–180', f: 0.62 },
         { v: '180_250', t: '180 a 250 m²', big: '180–250', f: 0.8 },
-        { v: 'acima_250', t: 'Acima de 250 m²', big: '250+', f: 1 }
+        { v: 'acima_250', t: 'Acima de 250 m²', big: '250+', f: 1 },
+        { v: 'nao_sei', t: 'Ainda não sei', unknown: true }
       ] }] },
     { name: 'Investimento', title: 'Quanto pretende investir na obra?',
       lead: 'Só para direcionarmos as soluções certas. Não é uma proposta.',
@@ -50,7 +51,7 @@
           { v: '6_12_meses', t: '6 a 12 meses' },
           { v: 'pesquisando', t: 'Só pesquisando' }
         ] },
-        { key: 'prioridade', label: 'Prioridade', qlabel: 'O que pesa mais na sua decisão?', options: [
+        { key: 'prioridade', label: 'Prioridade', qlabel: 'O que pesa mais na sua decisão?', hint: 'Marque quantas quiser.', multi: true, options: [
           { v: 'qualidade', t: 'Qualidade de acabamento' },
           { v: 'prazo_entrega', t: 'Prazo de entrega' },
           { v: 'gestao', t: 'Não me preocupar com a obra' },
@@ -81,6 +82,7 @@
   }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); }
   function optText(key, v) {
+    if (Array.isArray(v)) return v.map(function (x) { return optText(key, x); }).filter(Boolean).join(', ');
     for (var i = 0; i < STEPS.length; i++) {
       var qs = STEPS[i].questions || [];
       for (var j = 0; j < qs.length; j++) {
@@ -94,25 +96,28 @@
   // ---- Renderização -------------------------------------------------------
   function renderQuestion(q) {
     var html = '<div class="q">';
-    if (q.qlabel) html += '<span class="q__label">' + esc(q.qlabel) + '</span>';
+    if (q.qlabel) html += '<span class="q__label">' + esc(q.qlabel) + (q.hint ? '<span class="hint">' + esc(q.hint) + '</span>' : '') + '</span>';
     var two = q.cols === 2 || q.type === 'photo' || q.type === 'size';
-    html += '<div class="opts' + (two ? ' opts--2' : '') + '" role="radiogroup">';
+    html += '<div class="opts' + (two ? ' opts--2' : '') + '" role="' + (q.multi ? 'group' : 'radiogroup') + '">';
     q.options.forEach(function (o, i) {
       var id = q.key + '_' + i;
-      var checked = answers[q.key] === o.v ? ' checked' : '';
+      var sel = q.multi ? (answers[q.key] || []).indexOf(o.v) > -1 : answers[q.key] === o.v;
+      var checked = sel ? ' checked' : '';
       var key = '<span class="key" aria-hidden="true">' + String.fromCharCode(65 + i) + '</span>';
-      var cls = 'opt' + (q.type === 'photo' ? ' opt--photo' : '') + (q.type === 'size' ? ' opt--size' : '');
+      var cls = 'opt' + (q.type === 'photo' ? ' opt--photo' : '') + (q.type === 'size' ? ' opt--size' : '') + (q.multi ? ' opt--multi' : '');
       var inner;
       if (q.type === 'photo') {
         inner = (o.img ? '<img src="' + o.img + '" alt="" loading="lazy">' : '') + key +
           '<span class="txt"><span>' + esc(o.t) + '</span>' + (o.s ? '<small>' + esc(o.s) + '</small>' : '') + '</span>';
+      } else if (q.type === 'size' && o.unknown) {
+        inner = key + '<span class="plan plan--unknown" aria-hidden="true"><i style="height:44px"></i></span><span class="size size--text"><b>' + esc(o.t) + '</b></span>';
       } else if (q.type === 'size') {
         inner = key + '<span class="plan" aria-hidden="true"><i style="width:' + Math.round(o.f * 100) + '%;height:' + Math.round(20 + o.f * 32) + 'px"></i></span>' +
           '<span class="size"><b>' + esc(o.big) + '</b><span>m²</span></span>';
       } else {
         inner = key + '<span>' + esc(o.t) + '</span>';
       }
-      html += '<div class="' + cls + '"><input type="radio" name="' + q.key + '" id="' + id + '" value="' + o.v + '"' + checked + '>' +
+      html += '<div class="' + cls + '"><input type="' + (q.multi ? 'checkbox' : 'radio') + '" name="' + q.key + '" id="' + id + '" value="' + o.v + '"' + checked + '>' +
         '<label for="' + id + '" aria-label="' + esc(o.t) + '">' + inner + '</label></div>';
     });
     return html + '</div></div>';
@@ -121,7 +126,7 @@
   function renderContact() {
     return '' +
       '<div class="field"><label for="c_nome">Nome completo *</label><input id="c_nome" name="nome" autocomplete="name" placeholder="Como podemos te chamar?" value="' + esc(contact.nome) + '" required></div>' +
-      '<div class="field"><label for="c_whats">WhatsApp *</label><input id="c_whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(51) 98151-9380" value="' + esc(contact.whatsapp) + '" required></div>' +
+      '<div class="field"><label for="c_whats">WhatsApp *</label><input id="c_whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(51) 99999-9999" value="' + esc(contact.whatsapp) + '" required></div>' +
       '<div class="field"><label for="c_email">E-mail (opcional)</label><input id="c_email" name="email" type="email" autocomplete="email" placeholder="seu@email.com" value="' + esc(contact.email) + '"></div>' +
       '<div class="field"><label for="c_cidade">Cidade da obra *</label><input id="c_cidade" name="cidade" autocomplete="address-level2" placeholder="Onde você quer construir?" value="' + esc(contact.cidade) + '" required></div>' +
       '<div class="hp" aria-hidden="true"><label>Não preencha<input name="website" tabindex="-1" autocomplete="off"></label></div>' +
@@ -147,7 +152,7 @@
   function stepComplete() {
     var s = STEPS[current];
     if (s.contact) return true;
-    return s.questions.every(function (q) { return !!answers[q.key]; });
+    return s.questions.every(function (q) { return q.multi ? (answers[q.key] || []).length > 0 : !!answers[q.key]; });
   }
   // Etapas de uma pergunta avançam sozinhas; o botão só aparece quando já há
   // resposta (ao voltar para revisar) ou quando a etapa tem mais de uma pergunta.
@@ -162,6 +167,14 @@
   // ---- Interação ----------------------------------------------------------
   body.addEventListener('change', function (e) {
     var t = e.target;
+    if (t.type === 'checkbox' && t.name !== 'consent') {
+      var list = (answers[t.name] || []).filter(function (v) { return v !== t.value; });
+      if (t.checked) list.push(t.value);
+      answers[t.name] = list;
+      updateNext();
+      if (list.length === 1 && t.checked) nextBtn.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      return;
+    }
     if (t.type !== 'radio') return;
     var fresh = !answers[t.name];
     answers[t.name] = t.value;
@@ -170,8 +183,23 @@
     updateNext();
     if (fresh && stepComplete()) nextBtn.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   });
+  function maskPhone(v) {
+    var d = v.replace(/\D/g, '').slice(0, 11);
+    if (!d) return '';
+    var out = '(' + d.slice(0, 2);
+    if (d.length > 2) out += ') ' + d.slice(2, d.length > 10 ? 7 : 6);
+    if (d.length > (d.length > 10 ? 7 : 6)) out += '-' + d.slice(d.length > 10 ? 7 : 6);
+    return out;
+  }
+  body.addEventListener('focusin', function (e) {
+    if (e.target.name === 'whatsapp' && !e.target.value) e.target.value = '(';
+  });
+  body.addEventListener('focusout', function (e) {
+    if (e.target.name === 'whatsapp' && e.target.value === '(') { e.target.value = ''; contact.whatsapp = ''; }
+  });
   body.addEventListener('input', function (e) {
     var t = e.target;
+    if (t.name === 'whatsapp') t.value = maskPhone(t.value);
     if (STEPS[current].contact && t.name && t.name in contact) contact[t.name] = t.value;
   });
 
@@ -251,7 +279,7 @@
   var LABEL = {
     sistema: { steel_frame: 'Steel Frame', alvenaria: 'Alvenaria', indeciso: 'ainda não sei qual sistema' },
     terreno: { tenho: 'já tenho terreno', adquirindo: 'estou adquirindo o terreno', procurando: 'estou procurando terreno' },
-    metragem: { menos_80: 'menos de 80 m²', '80_120': '80 a 120 m²', '120_180': '120 a 180 m²', '180_250': '180 a 250 m²', acima_250: 'acima de 250 m²' }
+    metragem: { nao_sei: 'tamanho a definir', menos_80: 'menos de 80 m²', '80_120': '80 a 120 m²', '120_180': '120 a 180 m²', '180_250': '180 a 250 m²', acima_250: 'acima de 250 m²' }
   };
 
   function finish() {
