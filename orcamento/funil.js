@@ -239,6 +239,20 @@
     return o;
   }
 
+  function cookie(name) {
+    try {
+      var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+      return m ? decodeURIComponent(m[1]) : undefined;
+    } catch (e) { return undefined; }
+  }
+  // _fbc é gravado pelo Pixel; se ainda não existir, monta a partir do fbclid da URL.
+  function clickId() {
+    var c = cookie('_fbc');
+    if (c) return c;
+    var id = new URLSearchParams(location.search).get('fbclid');
+    return id ? 'fb.1.' + Date.now() + '.' + id : undefined;
+  }
+
   function send(payload) {
     if (DRY_RUN) return new Promise(function (resolve) { setTimeout(resolve, 700); });
     return fetch(CRM_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
@@ -267,7 +281,9 @@
 
     var payload = Object.assign({
       nome: contact.nome, whatsapp: digits, email: contact.email, cidade: contact.cidade,
-      respostas: answers, event_id: eventId, website: f.website.value
+      respostas: answers, event_id: eventId, website: f.website.value,
+      // Identificadores do Pixel: permitem ao CRM enviar o Lead pelo servidor ligado ao anúncio.
+      fbp: cookie('_fbp'), fbc: clickId(), source_url: location.origin + location.pathname
     }, utm());
 
     send(payload)
