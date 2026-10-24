@@ -17,13 +17,17 @@
       ] }] },
     { name: 'Terreno', title: 'Como está o terreno?',
       lead: 'A situação do terreno define por onde o projeto começa.',
-      questions: [{ key: 'terreno', label: 'Terreno', options: [
-        { v: 'tenho_condominio', t: 'Tenho terreno em condomínio fechado' },
-        { v: 'tenho', t: 'Tenho terreno fora de condomínio' },
-        { v: 'adquirindo', t: 'Estou adquirindo o terreno' },
-        { v: 'procurando_condominio', t: 'Procuro terreno em condomínio fechado' },
-        { v: 'procurando', t: 'Ainda estou procurando terreno' }
-      ] }] },
+      questions: [
+        { key: 'terreno', label: 'Terreno', qlabel: 'Situação do terreno', options: [
+          { v: 'tenho', t: 'Já tenho o terreno' },
+          { v: 'adquirindo', t: 'Estou adquirindo' },
+          { v: 'procurando', t: 'Ainda estou procurando' }
+        ] },
+        { key: 'condominio', label: 'Condomínio fechado', qlabel: 'É em condomínio fechado?', cols: 2, options: [
+          { v: 'sim', t: 'Sim' },
+          { v: 'nao', t: 'Não' }
+        ] }
+      ] },
     { name: 'Área construída', title: 'Qual o tamanho da casa que você quer construir?',
       lead: 'Uma estimativa já ajuda, ajustamos juntos depois.',
       questions: [{ key: 'metragem', label: 'Tamanho', type: 'size', options: [
@@ -280,7 +284,7 @@
 
   var LABEL = {
     sistema: { steel_frame: 'Steel Frame', alvenaria: 'Alvenaria', indeciso: 'ainda não sei qual sistema' },
-    terreno: { tenho_condominio: 'já tenho terreno em condomínio fechado', tenho: 'já tenho terreno', adquirindo: 'estou adquirindo o terreno', procurando_condominio: 'estou procurando terreno em condomínio fechado', procurando: 'estou procurando terreno' },
+    terreno: { tenho: 'já tenho terreno', adquirindo: 'estou adquirindo o terreno', procurando: 'estou procurando terreno' },
     metragem: { nao_sei: 'tamanho a definir', menos_80: 'menos de 80 m²', '80_120': 'entre 80 e 120 m²', '120_180': 'entre 120 e 180 m²', '180_250': 'entre 180 e 250 m²', acima_250: 'mais de 250 m²' }
   };
 
@@ -288,7 +292,7 @@
     quiz.hidden = true; done.hidden = false;
     var primeiro = contact.nome.split(' ')[0];
     $('doneTitle').textContent = primeiro + ', recebemos suas respostas!';
-    var rows = [['sistema', 'Sistema'], ['terreno', 'Terreno'], ['metragem', 'Tamanho'], ['investimento', 'Investimento'], ['prazo', 'Início'], ['prioridade', 'Prioridade']]
+    var rows = [['sistema', 'Sistema'], ['terreno', 'Terreno'], ['condominio', 'Condomínio fechado'], ['metragem', 'Tamanho'], ['investimento', 'Investimento'], ['prazo', 'Início'], ['prioridade', 'Prioridade']]
       .map(function (r) { return [r[1], optText(r[0], answers[r[0]])]; });
     rows.push(['Cidade', contact.cidade]);
     $('ficha').innerHTML = rows.filter(function (r) { return r[1]; })
@@ -296,7 +300,7 @@
     var msg = 'Olá! Sou ' + contact.nome + ', respondi a simulação no site. ' +
       'Quero construir em ' + (LABEL.sistema[answers.sistema] || 'Steel Frame ou Alvenaria') +
       ', casa de ' + (LABEL.metragem[answers.metragem] || 'tamanho a definir') +
-      ', ' + (LABEL.terreno[answers.terreno] || '') + ' (' + contact.cidade + ').';
+      ', ' + (LABEL.terreno[answers.terreno] || '') + (answers.condominio === 'sim' ? ', em condomínio fechado' : '') + ' (' + contact.cidade + ').';
     $('waLink').href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg);
     window.scrollTo(0, 0);
   }
