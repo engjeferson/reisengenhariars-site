@@ -2,14 +2,14 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Simule sua obra | Reis Engenharia & Construções</title>
 <meta name="description" content="Responda 6 perguntas rápidas e receba um diagnóstico da sua casa de 80 m² ou mais, em Steel Frame ou Alvenaria, com engenheiro responsável.">
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/png" href="../assets/img/logo/logo-teal.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="funil.css?v=dev">
 <!-- Meta Pixel (dataset "CRM Reis Engenharia") -->
 <script>
@@ -22,53 +22,49 @@ fbq('track','PageView');
 <body>
 
 <!-- ENTRADA -->
-<main class="screen screen--intro" id="intro">
-  <div class="intro">
+<main class="screen intro" id="intro">
+  <div class="intro__photo" role="img" aria-label="Estrutura em Steel Frame de uma casa de dois pavimentos, obra da Reis Engenharia"></div>
+  <div class="intro__body">
     <img class="intro__logo" src="../assets/img/logo/logo-branca.png" alt="Reis Engenharia & Construções">
-    <p class="intro__kicker">Casas de médio e alto padrão</p>
+    <p class="mono intro__tag">Simulação de obra · 6 perguntas · 2 min</p>
     <h1>Sua casa de <em>80 m² ou mais</em>, com engenheiro responsável do início à entrega.</h1>
-    <p class="intro__lead">Steel Frame ou Alvenaria. Em 2 minutos, descubra qual caminho combina com o seu projeto.</p>
-    <ul class="intro__badges">
-      <li><strong>+100</strong> obras entregues</li>
-      <li><strong>CREA-RS</strong> responsável técnico</li>
-    </ul>
-    <button class="btn-main" id="start" type="button">Começar minha simulação</button>
-    <p class="intro__note">Simulação gratuita e sem compromisso.</p>
-    <div class="intro__obras" aria-label="Obras da Reis Engenharia">
-      <img src="img/obra-1.jpg" alt="Casa de dois pavimentos pronta, obra da Reis" loading="lazy">
-      <img src="img/obra-2.jpg" alt="Casa térrea com garagem, obra da Reis" loading="lazy">
-      <img src="img/obra-3.jpg" alt="Estrutura em Steel Frame de casa de dois pavimentos, obra da Reis" loading="lazy">
+    <p class="intro__lead">Steel Frame ou Alvenaria. Responda e receba um diagnóstico do seu projeto.</p>
+    <div class="resp">
+      <img src="img/eng.jpg" alt="Eng. Jeferson Reis" width="56" height="56">
+      <p><strong>Eng. Jeferson Reis</strong><span class="mono">Responsável técnico · CREA-RS 236502</span></p>
     </div>
-    <p class="intro__caption">Obras da Reis Engenharia</p>
+    <button class="btn" id="start" type="button">Começar minha simulação</button>
+    <p class="intro__note"><strong>+100</strong> obras entregues na Grande Porto Alegre/RS. Simulação gratuita e sem compromisso.</p>
   </div>
 </main>
 
-<!-- FUNIL -->
-<div class="screen screen--quiz" id="quiz" hidden>
-  <div class="quiz">
-    <img class="quiz__logo" src="../assets/img/logo/logo-teal.png" alt="Reis Engenharia">
-    <div class="progress" aria-hidden="true">
-      <div class="progress__meta"><span id="stepName"></span><span id="stepCount"></span></div>
-      <div class="progress__bar"><span id="progressFill"></span></div>
+<!-- PERGUNTAS -->
+<div class="screen quiz" id="quiz" hidden>
+  <header class="quiz__top">
+    <button type="button" class="back" id="back" aria-label="Voltar"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="cota" aria-hidden="true">
+      <div class="cota__label mono"><span id="stepName"></span><b id="stepCount"></b></div>
+      <div class="cota__line"><i id="cotaFill"></i><span class="tick t0"></span><span class="tick t1"></span></div>
     </div>
-    <form id="stepForm" novalidate>
-      <div id="stepBody"></div>
-      <p class="error" id="stepError" role="alert" hidden></p>
-    </form>
-  </div>
-  <footer class="quiz__nav">
-    <button type="button" class="nav-back" id="back">← Voltar</button>
-    <button type="submit" form="stepForm" class="nav-next" id="next" disabled>Próximo →</button>
-  </footer>
+  </header>
+  <form id="stepForm" class="quiz__form" novalidate>
+    <div id="stepBody"></div>
+    <p class="error" id="stepError" role="alert" hidden></p>
+    <button type="submit" class="btn btn--dark" id="next" hidden>Continuar</button>
+  </form>
 </div>
 
 <!-- OBRIGADO -->
-<main class="screen screen--done" id="done" hidden>
-  <div class="intro">
-    <img class="intro__logo" src="../assets/img/logo/logo-branca.png" alt="Reis Engenharia & Construções">
+<main class="screen done" id="done" hidden>
+  <div class="done__body">
+    <svg class="done__check" width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="26" fill="none" stroke="#4ecdc4" stroke-width="2"/><path d="M17 29l8 8 14-16" fill="none" stroke="#4ecdc4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <h1 id="doneTitle">Recebemos suas respostas!</h1>
     <p class="intro__lead">Um engenheiro da nossa equipe vai analisar o seu projeto e chamar você no WhatsApp. Se preferir, adiante a conversa agora.</p>
-    <a class="btn-main btn-main--wa" id="waLink" href="#" target="_blank" rel="noopener">Continuar no WhatsApp</a>
+    <section class="ficha" aria-label="Ficha do projeto">
+      <p class="mono ficha__title">Ficha do projeto</p>
+      <dl id="ficha"></dl>
+    </section>
+    <a class="btn btn--wa" id="waLink" href="#" target="_blank" rel="noopener">Continuar no WhatsApp</a>
     <p class="intro__note">Atendemos Grande Porto Alegre/RS.</p>
   </div>
 </main>

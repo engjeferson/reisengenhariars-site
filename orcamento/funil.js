@@ -4,34 +4,36 @@
   // ---- Configuração -------------------------------------------------------
   var CRM_URL = 'https://crm.reisengenhariars.com.br/api/funil/lead';
   var WHATSAPP = '5551981519380';
+  // Prévia: não envia nada ao CRM (usada na versão de demonstração).
+  var DRY_RUN = !!window.__FUNIL_DRY_RUN || /[?&]preview=1\b/.test(location.search);
 
   var STEPS = [
-    { name: 'Sistema construtivo', title: 'Como você imagina sua obra?',
+    { name: 'Sistema', title: 'Como você imagina sua obra?',
       lead: 'Cada sistema muda prazo, custo e conforto. Se ainda não sabe, nós indicamos.',
-      questions: [{ key: 'sistema', type: 'photo', options: [
+      questions: [{ key: 'sistema', label: 'Sistema', type: 'photo', options: [
         { v: 'steel_frame', t: 'Steel Frame', s: 'Obra industrializada e rápida', img: 'img/steel.jpg' },
         { v: 'alvenaria', t: 'Alvenaria', s: 'Construção convencional', img: 'img/alvenaria.jpg' },
         { v: 'indeciso', t: 'Ainda não sei', s: 'Quero uma indicação' }
       ] }] },
     { name: 'Terreno', title: 'Como está o terreno?',
       lead: 'A situação do terreno define por onde o projeto começa.',
-      questions: [{ key: 'terreno', options: [
+      questions: [{ key: 'terreno', label: 'Terreno', options: [
         { v: 'tenho', t: 'Já tenho o terreno' },
         { v: 'adquirindo', t: 'Estou adquirindo' },
         { v: 'procurando', t: 'Ainda estou procurando' }
       ] }] },
-    { name: 'Tamanho', title: 'Qual o tamanho da casa que você quer construir?',
+    { name: 'Área construída', title: 'Qual o tamanho da casa que você quer construir?',
       lead: 'Somos especialistas em casas de 80 m² ou mais. Uma estimativa já ajuda, ajustamos juntos depois.',
-      questions: [{ key: 'metragem', options: [
-        { v: 'menos_80', t: 'Menos de 80 m²' },
-        { v: '80_120', t: '80 a 120 m²' },
-        { v: '120_180', t: '120 a 180 m²' },
-        { v: '180_250', t: '180 a 250 m²' },
-        { v: 'acima_250', t: 'Acima de 250 m²' }
+      questions: [{ key: 'metragem', label: 'Tamanho', type: 'size', options: [
+        { v: 'menos_80', t: 'Menos de 80 m²', big: '< 80', f: 0.26 },
+        { v: '80_120', t: '80 a 120 m²', big: '80–120', f: 0.44 },
+        { v: '120_180', t: '120 a 180 m²', big: '120–180', f: 0.62 },
+        { v: '180_250', t: '180 a 250 m²', big: '180–250', f: 0.8 },
+        { v: 'acima_250', t: 'Acima de 250 m²', big: '250+', f: 1 }
       ] }] },
     { name: 'Investimento', title: 'Quanto pretende investir na obra?',
       lead: 'Só para direcionarmos as soluções certas. Não é uma proposta.',
-      questions: [{ key: 'investimento', options: [
+      questions: [{ key: 'investimento', label: 'Investimento', options: [
         { v: 'ate_300', t: 'Até R$ 300 mil' },
         { v: '300_500', t: 'R$ 300 a 500 mil' },
         { v: '500_800', t: 'R$ 500 a 800 mil' },
@@ -42,13 +44,13 @@
     { name: 'Prazo e prioridade', title: 'O que é mais importante para você?',
       lead: 'Isso orienta a conversa com o nosso engenheiro.',
       questions: [
-        { key: 'prazo', label: 'Quando pretende começar?', cols: 2, options: [
+        { key: 'prazo', label: 'Início', qlabel: 'Quando pretende começar?', cols: 2, options: [
           { v: 'imediato', t: 'O quanto antes' },
           { v: '3_6_meses', t: '3 a 6 meses' },
           { v: '6_12_meses', t: '6 a 12 meses' },
           { v: 'pesquisando', t: 'Só pesquisando' }
         ] },
-        { key: 'prioridade', label: 'O que pesa mais na sua decisão?', options: [
+        { key: 'prioridade', label: 'Prioridade', qlabel: 'O que pesa mais na sua decisão?', options: [
           { v: 'qualidade', t: 'Qualidade de acabamento' },
           { v: 'prazo_entrega', t: 'Prazo de entrega' },
           { v: 'gestao', t: 'Não me preocupar com a obra' },
@@ -56,7 +58,7 @@
           { v: 'tecnologia', t: 'Tecnologia construtiva' }
         ] }
       ] },
-    { name: 'Finalização', title: 'Falta pouco para ver seu diagnóstico',
+    { name: 'Seus dados', title: 'Falta pouco para ver seu diagnóstico',
       lead: 'Precisamos apenas dos seus dados para dar continuidade.', contact: true }
   ];
 
@@ -77,23 +79,41 @@
   function trackCustom(name, params) {
     try { if (window.fbq) window.fbq('trackCustom', name, params || {}); } catch (e) { /* idem */ }
   }
-
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); }
+  function optText(key, v) {
+    for (var i = 0; i < STEPS.length; i++) {
+      var qs = STEPS[i].questions || [];
+      for (var j = 0; j < qs.length; j++) {
+        if (qs[j].key !== key) continue;
+        for (var k = 0; k < qs[j].options.length; k++) if (qs[j].options[k].v === v) return qs[j].options[k].t;
+      }
+    }
+    return '';
+  }
 
   // ---- Renderização -------------------------------------------------------
   function renderQuestion(q) {
     var html = '<div class="q">';
-    if (q.label) html += '<span class="q__label">' + esc(q.label) + '</span>';
-    var cls = q.cols === 2 ? 'opts opts--2' : (q.type === 'photo' ? 'opts opts--2' : 'opts');
-    html += '<div class="' + cls + '" role="radiogroup">';
+    if (q.qlabel) html += '<span class="q__label">' + esc(q.qlabel) + '</span>';
+    var two = q.cols === 2 || q.type === 'photo' || q.type === 'size';
+    html += '<div class="opts' + (two ? ' opts--2' : '') + '" role="radiogroup">';
     q.options.forEach(function (o, i) {
       var id = q.key + '_' + i;
       var checked = answers[q.key] === o.v ? ' checked' : '';
-      html += '<div class="opt' + (q.type === 'photo' ? ' opt--photo' : '') + '">' +
-        '<input type="radio" name="' + q.key + '" id="' + id + '" value="' + o.v + '"' + checked + '>' +
-        '<label for="' + id + '">' +
-        (o.img ? '<img src="' + o.img + '" alt="" loading="lazy">' : '') +
-        '<span>' + esc(o.t) + (o.s ? '<small>' + esc(o.s) + '</small>' : '') + '</span></label></div>';
+      var key = '<span class="key" aria-hidden="true">' + String.fromCharCode(65 + i) + '</span>';
+      var cls = 'opt' + (q.type === 'photo' ? ' opt--photo' : '') + (q.type === 'size' ? ' opt--size' : '');
+      var inner;
+      if (q.type === 'photo') {
+        inner = (o.img ? '<img src="' + o.img + '" alt="" loading="lazy">' : '') + key +
+          '<span class="txt"><span>' + esc(o.t) + '</span>' + (o.s ? '<small>' + esc(o.s) + '</small>' : '') + '</span>';
+      } else if (q.type === 'size') {
+        inner = key + '<span class="plan" aria-hidden="true"><i style="width:' + Math.round(o.f * 100) + '%;height:' + Math.round(20 + o.f * 32) + 'px"></i></span>' +
+          '<span class="size"><b>' + esc(o.big) + '</b><span>m²</span></span>';
+      } else {
+        inner = key + '<span>' + esc(o.t) + '</span>';
+      }
+      html += '<div class="' + cls + '"><input type="radio" name="' + q.key + '" id="' + id + '" value="' + o.v + '"' + checked + '>' +
+        '<label for="' + id + '" aria-label="' + esc(o.t) + '">' + inner + '</label></div>';
     });
     return html + '</div></div>';
   }
@@ -102,7 +122,7 @@
     return '' +
       '<div class="field"><label for="c_nome">Nome completo *</label><input id="c_nome" name="nome" autocomplete="name" placeholder="Como podemos te chamar?" value="' + esc(contact.nome) + '" required></div>' +
       '<div class="field"><label for="c_whats">WhatsApp *</label><input id="c_whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(51) 98151-9380" value="' + esc(contact.whatsapp) + '" required></div>' +
-      '<div class="field"><label for="c_email">E-mail</label><input id="c_email" name="email" type="email" autocomplete="email" placeholder="opcional" value="' + esc(contact.email) + '"></div>' +
+      '<div class="field"><label for="c_email">E-mail (opcional)</label><input id="c_email" name="email" type="email" autocomplete="email" placeholder="seu@email.com" value="' + esc(contact.email) + '"></div>' +
       '<div class="field"><label for="c_cidade">Cidade da obra *</label><input id="c_cidade" name="cidade" autocomplete="address-level2" placeholder="Onde você quer construir?" value="' + esc(contact.cidade) + '" required></div>' +
       '<div class="hp" aria-hidden="true"><label>Não preencha<input name="website" tabindex="-1" autocomplete="off"></label></div>' +
       '<label class="consent"><input type="checkbox" id="c_consent" name="consent"> <span>Concordo em ser contatado pela Reis Engenharia por WhatsApp e e-mail sobre o meu projeto, conforme a <a href="../politica-de-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</span></label>';
@@ -111,24 +131,31 @@
   function render() {
     var s = STEPS[current];
     $('stepName').textContent = s.name;
-    $('stepCount').textContent = (current + 1) + ' de ' + STEPS.length;
-    $('progressFill').style.width = ((current + 1) / STEPS.length * 100) + '%';
+    $('stepCount').textContent = String(current + 1).padStart(2, '0') + '/' + String(STEPS.length).padStart(2, '0');
+    $('cotaFill').style.width = ((current + 1) / STEPS.length * 100) + '%';
     var html = '<section class="step"><h2>' + esc(s.title) + '</h2><p class="step__lead">' + esc(s.lead) + '</p>';
     html += s.contact ? renderContact() : s.questions.map(renderQuestion).join('');
     body.innerHTML = html + '</section>';
-    nextBtn.textContent = s.contact ? 'Ver meu diagnóstico →' : 'Próximo →';
-    backBtn.style.visibility = current === 0 ? 'hidden' : 'visible';
+    backBtn.disabled = current === 0;
+    nextBtn.textContent = s.contact ? 'Ver meu diagnóstico' : 'Continuar';
     hideError();
     updateNext();
     window.scrollTo(0, 0);
   }
 
+  function single(s) { return !s.contact && s.questions.length === 1; }
   function stepComplete() {
     var s = STEPS[current];
     if (s.contact) return true;
     return s.questions.every(function (q) { return !!answers[q.key]; });
   }
-  function updateNext() { nextBtn.disabled = sending || !stepComplete(); }
+  // Etapas de uma pergunta avançam sozinhas; o botão só aparece quando já há
+  // resposta (ao voltar para revisar) ou quando a etapa tem mais de uma pergunta.
+  function updateNext() {
+    var s = STEPS[current];
+    nextBtn.hidden = single(s) && !stepComplete();
+    nextBtn.disabled = sending || !stepComplete();
+  }
   function showError(msg) { errorBox.textContent = msg; errorBox.hidden = false; }
   function hideError() { errorBox.hidden = true; }
 
@@ -136,11 +163,12 @@
   body.addEventListener('change', function (e) {
     var t = e.target;
     if (t.type !== 'radio') return;
+    var fresh = !answers[t.name];
     answers[t.name] = t.value;
-    updateNext();
     var s = STEPS[current];
-    // Etapas com uma única pergunta avançam sozinhas: um toque por etapa.
-    if (!s.contact && s.questions.length === 1) setTimeout(goNext, 220);
+    if (single(s)) { setTimeout(goNext, 240); return; }
+    updateNext();
+    if (fresh && stepComplete()) nextBtn.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   });
   body.addEventListener('input', function (e) {
     var t = e.target;
@@ -152,11 +180,9 @@
   });
 
   function goNext() {
-    if (!stepComplete()) return;
-    if (current < STEPS.length - 1) {
-      trackCustom('QuizStep', { step: current + 1, name: STEPS[current].name });
-      current++; render();
-    }
+    if (!stepComplete() || STEPS[current].contact) return;
+    trackCustom('QuizStep', { step: current + 1, name: STEPS[current].name });
+    current++; render();
   }
 
   form.addEventListener('submit', function (e) {
@@ -177,6 +203,16 @@
     var p = new URLSearchParams(location.search), o = {};
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { if (p.get(k)) o[k] = p.get(k); });
     return o;
+  }
+
+  function send(payload) {
+    if (DRY_RUN) return new Promise(function (resolve) { setTimeout(resolve, 700); });
+    return fetch(CRM_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      .then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          if (!res.ok) throw new Error(data.error || 'Não foi possível enviar agora. Tente novamente.');
+        });
+      });
   }
 
   function submitLead() {
@@ -200,19 +236,14 @@
       respostas: answers, event_id: eventId, website: f.website.value
     }, utm());
 
-    fetch(CRM_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-      .then(function (res) {
-        return res.json().catch(function () { return {}; }).then(function (data) {
-          if (!res.ok) throw new Error(data.error || 'Não foi possível enviar agora. Tente novamente.');
-        });
-      })
+    send(payload)
       .then(function () {
         // eventID igual ao enviado ao CRM permite deduplicar com a API de Conversões.
         track('Lead', { content_name: 'Funil de orçamento', value: 0, currency: 'BRL' }, { eventID: eventId });
         finish();
       })
       .catch(function (err) {
-        sending = false; nextBtn.textContent = 'Ver meu diagnóstico →'; updateNext();
+        sending = false; nextBtn.textContent = 'Ver meu diagnóstico'; updateNext();
         showError(err instanceof TypeError ? 'Sem conexão. Verifique a internet e tente de novo.' : err.message);
       });
   }
@@ -227,6 +258,11 @@
     quiz.hidden = true; done.hidden = false;
     var primeiro = contact.nome.split(' ')[0];
     $('doneTitle').textContent = primeiro + ', recebemos suas respostas!';
+    var rows = [['sistema', 'Sistema'], ['terreno', 'Terreno'], ['metragem', 'Tamanho'], ['investimento', 'Investimento'], ['prazo', 'Início'], ['prioridade', 'Prioridade']]
+      .map(function (r) { return [r[1], optText(r[0], answers[r[0]])]; });
+    rows.push(['Cidade', contact.cidade]);
+    $('ficha').innerHTML = rows.filter(function (r) { return r[1]; })
+      .map(function (r) { return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join('');
     var msg = 'Olá! Sou ' + contact.nome + ', respondi a simulação no site. ' +
       'Quero construir em ' + (LABEL.sistema[answers.sistema] || 'Steel Frame ou Alvenaria') +
       ', casa de ' + (LABEL.metragem[answers.metragem] || 'tamanho a definir') +
