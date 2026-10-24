@@ -9,8 +9,8 @@
     { name: 'Sistema construtivo', title: 'Como você imagina sua obra?',
       lead: 'Cada sistema muda prazo, custo e conforto. Se ainda não sabe, nós indicamos.',
       questions: [{ key: 'sistema', type: 'photo', options: [
-        { v: 'steel_frame', t: 'Steel Frame', s: 'Obra industrializada e rápida', img: '../assets/img/steelframe/perfis-galvanizados.jpg' },
-        { v: 'alvenaria', t: 'Alvenaria', s: 'Construção convencional', img: '../assets/img/obras/fachada-moderna-01.jpg' },
+        { v: 'steel_frame', t: 'Steel Frame', s: 'Obra industrializada e rápida', img: 'img/steel.jpg' },
+        { v: 'alvenaria', t: 'Alvenaria', s: 'Construção convencional', img: 'img/alvenaria.jpg' },
         { v: 'indeciso', t: 'Ainda não sei', s: 'Quero uma indicação' }
       ] }] },
     { name: 'Terreno', title: 'Como está o terreno?',
@@ -20,10 +20,11 @@
         { v: 'adquirindo', t: 'Estou adquirindo' },
         { v: 'procurando', t: 'Ainda estou procurando' }
       ] }] },
-    { name: 'Tamanho', title: 'Qual o tamanho da casa dos sonhos?',
-      lead: 'Uma estimativa já ajuda. Ajustamos junto com você depois.',
+    { name: 'Tamanho', title: 'Qual o tamanho da casa que você quer construir?',
+      lead: 'Somos especialistas em casas de 80 m² ou mais. Uma estimativa já ajuda, ajustamos juntos depois.',
       questions: [{ key: 'metragem', options: [
-        { v: 'ate_120', t: 'Até 120 m²' },
+        { v: 'menos_80', t: 'Menos de 80 m²' },
+        { v: '80_120', t: '80 a 120 m²' },
         { v: '120_180', t: '120 a 180 m²' },
         { v: '180_250', t: '180 a 250 m²' },
         { v: 'acima_250', t: 'Acima de 250 m²' }
@@ -31,10 +32,11 @@
     { name: 'Investimento', title: 'Quanto pretende investir na obra?',
       lead: 'Só para direcionarmos as soluções certas. Não é uma proposta.',
       questions: [{ key: 'investimento', options: [
-        { v: 'ate_400', t: 'Até R$ 400 mil' },
-        { v: '400_700', t: 'R$ 400 a 700 mil' },
-        { v: '700_1000', t: 'R$ 700 mil a 1 milhão' },
-        { v: 'acima_1000', t: 'Acima de R$ 1 milhão' },
+        { v: 'ate_300', t: 'Até R$ 300 mil' },
+        { v: '300_500', t: 'R$ 300 a 500 mil' },
+        { v: '500_800', t: 'R$ 500 a 800 mil' },
+        { v: '800_1200', t: 'R$ 800 mil a 1,2 milhão' },
+        { v: 'acima_1200', t: 'Acima de R$ 1,2 milhão' },
         { v: 'nao_sei', t: 'Ainda não defini' }
       ] }] },
     { name: 'Prazo e prioridade', title: 'O que é mais importante para você?',
@@ -218,7 +220,7 @@
   var LABEL = {
     sistema: { steel_frame: 'Steel Frame', alvenaria: 'Alvenaria', indeciso: 'ainda não sei qual sistema' },
     terreno: { tenho: 'já tenho terreno', adquirindo: 'estou adquirindo o terreno', procurando: 'estou procurando terreno' },
-    metragem: { ate_120: 'até 120 m²', '120_180': '120 a 180 m²', '180_250': '180 a 250 m²', acima_250: 'acima de 250 m²' }
+    metragem: { menos_80: 'menos de 80 m²', '80_120': '80 a 120 m²', '120_180': '120 a 180 m²', '180_250': '180 a 250 m²', acima_250: 'acima de 250 m²' }
   };
 
   function finish() {
