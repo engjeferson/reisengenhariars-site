@@ -120,7 +120,7 @@ def upload_file(ftp, local_path, remote_path):
 def main():
     bump_cache_busters()
     creds = load_credentials()
-    print(f"Conectando em {creds['host']}:{creds['port']}...")
+    print("Conectando ao servidor FTP...")
     ftp = ftplib.FTP()
     ftp.connect(creds["host"], creds["port"], timeout=30)
     ftp.login(creds["user"], creds["password"])
