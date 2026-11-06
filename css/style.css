@@ -413,12 +413,20 @@ h3{font-size:1.2rem;margin-bottom:.5rem;}
 
 /* DEPOIMENTOS */
 .testimonials{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
+  display:flex;
   gap:24px;
   margin-top:2rem;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  padding-bottom:4px;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
 }
+.testimonials::-webkit-scrollbar{display:none;}
 .testimonial{
+  scroll-snap-align:start;
+  flex:0 0 100%;
   background:#fff;
   border:1px solid var(--border);
   border-radius:var(--radius);
@@ -427,6 +435,23 @@ h3{font-size:1.2rem;margin-bottom:.5rem;}
   display:flex;
   flex-direction:column;
 }
+@media (min-width:601px){
+  .testimonial{flex:0 0 calc(50% - 12px);}
+}
+@media (min-width:961px){
+  .testimonial{flex:0 0 calc(33.333% - 16px);}
+}
+.testimonials-nav{
+  display:flex;justify-content:center;gap:12px;margin-top:20px;
+}
+.testimonials-nav__btn{
+  width:46px;height:46px;border-radius:50%;
+  background:#fff;border:1px solid var(--border);color:var(--navy);
+  font-size:1.05rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s,border-color .15s,color .15s;
+}
+.testimonials-nav__btn:hover{background:var(--teal);border-color:var(--teal);color:#fff;}
 .testimonial__quote{
   color:var(--gray);
   font-size:.92rem;
@@ -633,7 +658,6 @@ h3{font-size:1.2rem;margin-bottom:.5rem;}
   .about__img img{max-height:420px;width:100%;}
   .cards{grid-template-columns:repeat(2,1fr);}
   .gallery{grid-template-columns:repeat(2,1fr);}
-  .testimonials{grid-template-columns:repeat(2,1fr);}
   .steelframe__grid{grid-template-columns:repeat(2,1fr);}
   .steelframe__anatomy-grid{grid-template-columns:repeat(2,1fr);}
   .steelframe__top{grid-template-columns:1fr;}
@@ -642,7 +666,6 @@ h3{font-size:1.2rem;margin-bottom:.5rem;}
 @media (max-width:600px){
   .cards{grid-template-columns:1fr;}
   .gallery{grid-template-columns:1fr 1fr;}
-  .testimonials{grid-template-columns:1fr;}
   .hero__stats{gap:30px;}
   .section{padding:60px 0;}
   .contact__form{padding:24px;}

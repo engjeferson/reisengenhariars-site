@@ -158,7 +158,7 @@ form.addEventListener('submit', async (e) => {
     '.about__img, .about__text, .card, ' +
     '.steelframe__top > div, .steelframe__photo, .steelframe__featured, ' +
     '.steelframe__anatomy-card, .steelframe__feature, ' +
-    '.process__card, .gallery__item, .testimonial, ' +
+    '.process__track, .gallery__item, .testimonials, ' +
     '.contact__info, .contact__form'
   );
   if (!targets.length) return;
@@ -187,4 +187,21 @@ form.addEventListener('submit', async (e) => {
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
   targets.forEach(function (el) { revealObserver.observe(el); });
+})();
+
+// Carrossel de depoimentos
+(function () {
+  var track = document.querySelector('.testimonials');
+  var prevBtn = document.getElementById('testiPrev');
+  var nextBtn = document.getElementById('testiNext');
+  if (!track || !prevBtn || !nextBtn) return;
+
+  function scrollByCard(dir) {
+    var card = track.querySelector('.testimonial');
+    var gap = 24;
+    var amount = card ? card.getBoundingClientRect().width + gap : 320;
+    track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+  }
+  prevBtn.addEventListener('click', function () { scrollByCard(-1); });
+  nextBtn.addEventListener('click', function () { scrollByCard(1); });
 })();
