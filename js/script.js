@@ -150,3 +150,41 @@ form.addEventListener('submit', async (e) => {
     submitBtn.textContent = 'Enviar mensagem';
   }
 });
+
+// Animações de entrada ao rolar a página
+(function () {
+  var targets = document.querySelectorAll(
+    '.section .eyebrow, .section > .container > h2, .section__lead, ' +
+    '.about__img, .about__text, .card, ' +
+    '.steelframe__top > div, .steelframe__photo, .steelframe__featured, ' +
+    '.steelframe__anatomy-card, .steelframe__feature, ' +
+    '.process__card, .gallery__item, .testimonial, ' +
+    '.contact__info, .contact__form'
+  );
+  if (!targets.length) return;
+
+  var groups = new Map();
+  targets.forEach(function (el) {
+    el.classList.add('reveal');
+    var parent = el.parentElement;
+    var i = groups.get(parent) || 0;
+    groups.set(parent, i + 1);
+    el.style.setProperty('--reveal-i', Math.min(i, 6));
+  });
+
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+
+  var revealObserver = new IntersectionObserver(function (entries, observer) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  targets.forEach(function (el) { revealObserver.observe(el); });
+})();
