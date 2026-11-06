@@ -13,3 +13,20 @@
     Header set Expires 0
   </FilesMatch>
 </IfModule>
+
+# Força HTTPS em todo o site.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Cabeçalhos de segurança básicos. Sem Content-Security-Policy por ora: o
+# funil em /orcamento usa o script inline do Meta Pixel, e um CSP mal
+# configurado quebraria o rastreamento dos anúncios.
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+</IfModule>
