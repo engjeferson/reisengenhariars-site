@@ -1,0 +1,18 @@
+{
+	email {$ACME_EMAIL}
+}
+
+{$CAP_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy cap-web:3000
+}
+
+# Endpoint S3 publico: o navegador/app envia os videos direto para ca
+{$S3_DOMAIN} {
+	request_body {
+		max_size 10GB
+	}
+	reverse_proxy minio:9000 {
+		flush_interval -1
+	}
+}
