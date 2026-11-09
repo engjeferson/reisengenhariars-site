@@ -87,6 +87,23 @@ def bump_cache_busters():
                 f.write(new_funil)
             print("Cache-busters do funil atualizados (orcamento/)")
 
+    # Funil de Xangri-lá (orcamento/xangrila/): usa o CSS do funil e tem JS próprio.
+    xg_dir = os.path.join(funil_dir, "xangrila")
+    xg_index = os.path.join(xg_dir, "index.html")
+    if os.path.exists(xg_index):
+        with open(xg_index, "r", encoding="utf-8") as f:
+            xg_html = f.read()
+        new_xg = xg_html
+        for name, path in (("../funil.css", os.path.join(funil_dir, "funil.css")),
+                           ("funil.js", os.path.join(xg_dir, "funil.js"))):
+            h = file_hash(path)
+            new_xg = re.sub(rf'(?<![\w/.])({re.escape(name)})(\?v=[^"]*)?', rf'\1?v={h}', new_xg) if name == "funil.js" \
+                else re.sub(rf'({re.escape(name)})(\?v=[^"]*)?', rf'\1?v={h}', new_xg)
+        if new_xg != xg_html:
+            with open(xg_index, "w", encoding="utf-8") as f:
+                f.write(new_xg)
+            print("Cache-busters do funil de Xangri-lá atualizados")
+
 
 def load_credentials():
     if not os.path.exists(CREDS_PATH):
